@@ -17,16 +17,16 @@ export class Migration013 extends Migration {
   }
 
   async forward(node: IronfishNode): Promise<void> {
-    Assert.isNotUndefined(this.accounts)
-    Assert.isNotUndefined(this.chain)
+    // Assert.isNotUndefined(this.accounts)
+    // Assert.isNotUndefined(this.chain)
 
-    const { meta, accounts, noteToNullifier, nullifierToNote, transactions } = loadStores(
-      this.accounts,
-    )
+    // const { meta, accounts, noteToNullifier, nullifierToNote, transactions } = loadStores(
+    //   this.accounts,
+    // )
 
-    for await (const transaction of transactions.getAllValuesIter()) {
-      console.log('EH', JSON.stringify(transaction, null, '  '))
-    }
+    // for await (const transaction of transactions.getAllValuesIter()) {
+    //   console.log('EH', JSON.stringify(transaction, null, '  '))
+    // }
 
     throw new Error()
 

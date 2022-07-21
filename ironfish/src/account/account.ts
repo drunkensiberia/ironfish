@@ -123,7 +123,7 @@ export class Account {
     hash: string
     index: number | null
     note: Note
-    transactionHash: Buffer | null
+    transactionHash: Buffer
   }> {
     const unspentNotes = []
 

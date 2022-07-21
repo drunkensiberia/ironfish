@@ -92,12 +92,11 @@ export class Migrator {
     const logger = options?.quiet ? null : this.logger
     const writeOut = options?.quiet ? null : (t: string) => process.stdout.write(t)
 
-    const status = await Promise.all(
-      this.migrations.map(async (migration) => {
-        const applied = await this.isApplied(migration)
-        return [migration, applied] as const
-      }),
-    )
+    const status = new Array<[Migration, boolean]>()
+    for (const migration of this.migrations) {
+      const applied = await this.isApplied(migration)
+      status.push([migration, applied])
+    }
 
     const unapplied = status.filter(([, applied]) => !applied).map(([migration]) => migration)
 
@@ -111,6 +110,7 @@ export class Migrator {
     logger?.info(`Running ${unapplied.length} migrations:`)
 
     for (const migration of unapplied) {
+      console.log('foo 4', migration.name)
       writeOut?.(`  Applying ${migration.name}...`)
 
       const db = await migration.prepare(this.node)
@@ -124,7 +124,6 @@ export class Migrator {
         })
       } catch (e) {
         writeOut?.(` ERROR\n`)
-        this.logger.error(ErrorUtils.renderError(e, true))
         throw e
       } finally {
         await db.close()

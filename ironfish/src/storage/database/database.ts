@@ -163,11 +163,6 @@ export abstract class Database implements IDatabase {
   addStore<Schema extends DatabaseSchema>(
     options: IDatabaseStoreOptions<Schema>,
   ): IDatabaseStore<Schema> {
-    if (this.isOpen) {
-      throw new DatabaseIsOpenError(
-        `Cannot add store ${options.name} while the database is open`,
-      )
-    }
     const existing = this.stores.get(options.name)
     if (existing) {
       return existing as IDatabaseStore<Schema>

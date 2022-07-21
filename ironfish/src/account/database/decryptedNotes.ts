@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import bufio from 'bufio'
+import { Assert } from '../../assert'
 import { IDatabaseEncoding } from '../../storage'
 
 export const NOTE_SIZE = 43 + 8 + 32 + 32
@@ -12,7 +13,7 @@ export interface DecryptedNotesValue {
   nullifierHash: string | null
   serializedNote: Buffer
   spent: boolean
-  transactionHash: Buffer | null
+  transactionHash: Buffer
 }
 
 export class DecryptedNotesValueEncoding implements IDatabaseEncoding<DecryptedNotesValue> {
@@ -69,6 +70,8 @@ export class DecryptedNotesValueEncoding implements IDatabaseEncoding<DecryptedN
     if (hasTransactionHash) {
       transactionHash = reader.readHash()
     }
+
+    Assert.isNotNull(transactionHash)
 
     return { accountId, noteIndex, nullifierHash, serializedNote, spent, transactionHash }
   }

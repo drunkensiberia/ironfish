@@ -2,7 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 import bufio from 'bufio'
-import { IDatabaseEncoding } from '../../../storage/database/types'
+import { IDatabaseEncoding, IDatabaseStore } from '../../../../storage'
+
+export type TransactionsStore = IDatabaseStore<{
+  key: Buffer
+  value: TransactionsValue
+}>
 
 export interface TransactionsValue {
   transaction: Buffer

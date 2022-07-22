@@ -64,6 +64,10 @@
         ```
     - encoder: TransactionsValueEncoding
 
+## Removed Stores
+ *b nullifierToNote
+ * noteToNullifier
+
 ## Changed Stores
 
 ### meta
@@ -99,6 +103,14 @@
     - Key changed from account name to account id
 
 ## New Stores
+
+### nullifierToNoteHash
+  - key:
+    - type: string
+    - encoder: StringHashEncoding
+  - value
+    - type: string
+    - encoder StringEncoding
 
 ### headHashes
   - key:

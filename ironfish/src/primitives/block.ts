@@ -78,6 +78,24 @@ export class Block {
     Assert.isNotUndefined(tx, 'Block has no miners fee')
     return tx
   }
+
+  toCompactBlock(): SerializedCompactBlock {
+    const header = new BlockHeaderSerde(this.header.strategy).serialize(this.header)
+
+    const [minersFee, ...transactions] = this.transactions
+    const transactionHashes = transactions.map((t) => t.hash())
+
+    return {
+      header,
+      transactionHashes,
+      transactions: [
+        {
+          index: 0,
+          transaction: minersFee.serialize(),
+        },
+      ],
+    }
+  }
 }
 
 export type CompactBlockTransaction = {
